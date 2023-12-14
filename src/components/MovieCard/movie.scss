@@ -1,5 +1,6 @@
+@import '../../common/colors.scss';
 .movieCard{
-    background: rgb(26, 26, 26);
+    background: $secondary-color;
     width: 238px;
     height: 365px;
 

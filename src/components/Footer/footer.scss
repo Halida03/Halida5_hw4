@@ -1,6 +1,8 @@
+@import '../../common/colors.scss';
+
 .footer{
     height: 70px;
-    background: rgb(26, 26, 26);
+    background: $secondary-color;
     display: flex;
     flex-direction: column;
     justify-content: center;

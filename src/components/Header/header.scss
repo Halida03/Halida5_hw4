@@ -1,6 +1,7 @@
+@import '../../common/colors.scss';
 .header{
     height: 70px;
-    background: rgb(26, 26, 26);
+    background: $secondary-color;
     display: flex;
     justify-content: space-between;
     align-items: center;
