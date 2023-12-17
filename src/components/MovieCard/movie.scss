@@ -1,8 +1,16 @@
 @import '../../common/colors.scss';
+
 .movieCard{
     background: $secondary-color;
     width: 238px;
     height: 365px;
+    cursor: pointer;
+    transition: all 0.4s;
+
+    &:hover{
+        transform: scale(1.1);
+        transition: all 0.3s;
+    }
 
     img{
         width: 238px;
@@ -14,7 +22,7 @@
         flex-direction: column;
         gap: 15px;
         p{
-            color: #fff;
+            color: $font-primary;
             font-family: sans-serif;
         }
     }
