@@ -5,7 +5,7 @@ import MovieListing from "../../components/MovieListing/Index";
 const Home = () => {
 
   return <div className="home">
-    <MovieListing />
+\    <MovieListing />
   </div>;
 };
 

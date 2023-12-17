@@ -12,6 +12,7 @@ const MovieListing = () => {
 
   const { movies, status: movieStatus } = useSelector((state) => state.movie || { movies: [], status: 'loading' });
   const { shows, status: seriesStatus } = useSelector((state) => state.series || { shows: [], status: 'loading' });
+  const { searchResults, status: searchStatus } = useSelector((state) => state.search || { searchResults: [], status: 'loading' });
 
   useEffect(() => {
     if (activeCategory === 'movies') {
@@ -20,6 +21,9 @@ const MovieListing = () => {
       dispatch(getTVSeries());
     }
   }, [dispatch, activeCategory]);
+
+  const isSearchResultsForMovies = searchStatus === 'success' && Array.isArray(searchResults) && searchResults.length > 0 && activeCategory === 'movies';
+  const isSearchResultsForSeries = searchStatus === 'success' && Array.isArray(searchResults) && searchResults.length > 0 && activeCategory === 'series';
 
   return (
     <div className='movieListing'>
@@ -30,9 +34,19 @@ const MovieListing = () => {
       <div className="content">
         {activeCategory === 'movies' && (
           <>
+            {isSearchResultsForMovies && (
+              <div className="movie-container">
+                {searchResults
+                  .slice() 
+                  .sort((a, b) => a.Title.localeCompare(b.Title))
+                  .map((movie) => (
+                    <MovieCard key={movie.imdbID} movie={movie} />
+                  ))}
+              </div>
+            )}
             {movieStatus === 'loading' && <p>Loading movies...</p>}
             {movieStatus === 'error' && <p>Error loading movies.</p>}
-            {movieStatus === 'success' && movies.Search && Array.isArray(movies.Search) && (
+            {movieStatus === 'success' && !isSearchResultsForMovies && movies.Search && Array.isArray(movies.Search) && (
               <div className="movie-container">
                 {movies.Search.map((movie) => (
                   <MovieCard key={movie.imdbID} movie={movie} />
@@ -42,18 +56,26 @@ const MovieListing = () => {
           </>
         )}
 
-{activeCategory === 'series' && (
-  <>
-    {seriesStatus === 'loading' && <p>Loading shows...</p>}
-    {seriesStatus === 'error' && <p>Error loading shows.</p>}
-    {seriesStatus === 'success' && shows && Array.isArray(shows) && (
-      <div className="show-container">
-        <SeriesCard/>
-      </div>
-    )}
-  </>
-)}
-
+        {activeCategory === 'series' && (
+          <>
+            {seriesStatus === 'loading' && <p>Loading shows...</p>}
+            {seriesStatus === 'error' && <p>Error loading shows.</p>}
+            {isSearchResultsForSeries && (
+              <div className="movie-container">
+                {searchResults.map((show) => (
+                  <SeriesCard key={show.imdbID} series={show} />
+                ))}
+              </div>
+            )}
+            {seriesStatus === 'success' && !isSearchResultsForSeries && shows && Array.isArray(shows) && shows.length > 0 && (
+              <div className="movie-container">
+                {shows.map((show) => (
+                  <SeriesCard key={show.imdbID} series={show} />
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

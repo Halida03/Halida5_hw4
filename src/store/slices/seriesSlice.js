@@ -14,7 +14,6 @@ export const getTVSeries = createAsyncThunk('series/getTVSeries', async () => {
 
 const initialState = {
   shows: [],
-  seriesInfo: {},
   status: "loading",
 };
 
@@ -40,7 +39,7 @@ const seriesSlice = createSlice({
       (state, action) => {
         console.log("Fetched TV series:", action.payload);
         state.status = "success";
-        state.shows = action.payload;
+        state.shows = action.payload.Search || []; // Обновлено поле для хранения результатов
       }
     );
   },
