@@ -7,7 +7,7 @@ import SearchBar from '../SearchBar';
 const Header = () => {
   return (
     <div className='header'>
-      <Link to="/">
+      <Link to="/" className='custom-link'>
         <div>Movie App</div>
       </Link>
       <div className="serach-img">
